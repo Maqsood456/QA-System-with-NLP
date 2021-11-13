@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+HomePage
+{% endblock title %}
+<!--body section-->
+{% block body %}
+  <div class="container mt-3">
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="username" class="form-label">USERNAME</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="usernmae">
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">LECTURE TOPIC</label>
+          <input type="text" class="form-control" id="topic" name="topic" placeholder="Topic of the Video Lecture">
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Upload video file & starting QA sesion</label>
+            <input class="form-control" type="file" name="videolecture">
+        </div>
+        <button type="submit" class="btn btn-primary">Start QA session</button>
+      </form>
+  </div>
+{% endblock body %}
