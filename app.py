@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 class Lectures(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False)
-    topic = db.Column(db.String(120), nullable=False)
+    videopath = db.Column(db.String(120), nullable=False)
     videoname = db.Column(db.String(120), nullable=False)
     videotext = db.Column(db.String(120), nullable=False)
 
