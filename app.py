@@ -1,22 +1,32 @@
-from flask import Flask,render_template
-from flask_sqlalchemy import SQLAlchemy
-
+import os
+from flask import Flask,render_template,request
+from flask_mysqldb import MySQL
+from werkzeug.utils import secure_filename
+UPLOAD_FOLDER = 'C:\\Users\\MUHAMMAD\\PycharmProjects\\myproject\\static'
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/qasystem'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db = SQLAlchemy(app)
 
-class Lectures(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), nullable=False)
-    videopath = db.Column(db.String(120), nullable=False)
-    videoname = db.Column(db.String(120), nullable=False)
-    videotext = db.Column(db.String(120), nullable=False)
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'qasystem'
+mysql = MySQL(app)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 
 @app.route("/",methods=['GET', 'POST'])
 def index_page():
+    if request.method == "POST":
+        username = request.form['name']
+        topic = request.form['topic']
+        video= request.files['inputfile']
+        video.save(os.path.join(app.config['UPLOAD_FOLDER'],video.filename))
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO Lectures(username,topic,videoname) VALUES('usernmae','topic','video.filename')")
+        mysql.connection.commit()
+        cur.close()
+        return 'success'
     return render_template("index.html")
-
 
 if __name__=="__main__":
     app.run(debug=True)
