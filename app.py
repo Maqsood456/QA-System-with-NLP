@@ -22,7 +22,7 @@ def index_page():
         video= request.files['inputfile']
         video.save(os.path.join(app.config['UPLOAD_FOLDER'],video.filename))
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO Lectures(username,topic,videoname) VALUES('usernmae','topic','video.filename')")
+        cur.execute("INSERT INTO Lectures(username,topic,videoname) VALUES(%s,%s,%s)",(username,topic,video.filename))
         mysql.connection.commit()
         cur.close()
         return 'success'
