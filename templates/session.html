@@ -4,5 +4,21 @@ HomePage
 {% endblock title %}
 <!--body section-->
 {% block body %}
-<h1> This is our dynamic session page</h1>
+  <div class="container mt-3">
+    <form action="/session" method="POST" enctype="multipart/form-data">
+        <div class="mb-3 bg-light">
+            <p>{{result}}</p>
+        </div>
+        <div class="mb-3">
+            <label for="Question" class="form-label">QUESTION</label>
+            <input type="text" class="form-control" name="question" id="question" placeholder="Enter Your Question">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Send Question</button>
+        </div>
+        <div class="mb-3 bg-light">
+            <p>{{Answer}}</p>
+        </div>
+    </form>
+  </div>
 {% endblock body %}
