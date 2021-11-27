@@ -1,0 +1,82 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico" />
+
+    <title>Admin Sign In</title>
+
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/4.0/examples/sign-in/"
+    />
+
+    <!-- Bootstrap core CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link
+      href="{{ url_for('static', filename='css/login.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body
+    class="text-center"
+    data-new-gr-c-s-check-loaded="14.1040.0"
+    data-gr-ext-installed=""
+  >
+    <form class="form-signin" action="/login" method="post">
+      <img
+        class="mb-4"
+        src="{{url_for('static',filename='img/admin_login.png')}}"
+        alt=""
+        width="72"
+        height="72"
+      />
+      <h1 class="h3 mb-3 font-weight-normal">Admin Login</h1>
+      <label for="inputEmail" class="sr-only">USERNAME</label>
+      <input
+        type="text"
+        id="inputname"
+        name="usernmae"
+        class="form-control"
+        placeholder="Enter Username"
+        required=""
+        autofocus=""
+      />
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input
+        type="password"
+        id="inputPassword"
+        name="passward"
+        class="form-control"
+        placeholder="Enter Password"
+        required=""
+      />
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me" /> Remember me
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Sign in
+      </button>
+      <p class="mt-5 mb-3 text-muted">{{params['footer_caption']}}</p>
+    </form>
+  </body>
+  <grammarly-desktop-integration
+    data-grammarly-shadow-root="true"
+  ></grammarly-desktop-integration>
+</html>

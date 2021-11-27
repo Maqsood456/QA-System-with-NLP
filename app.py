@@ -19,7 +19,8 @@ mysql = MySQL(app)
 app.config['UPLOAD_FOLDER'] = params['upload_folder_path']
 
 #scret key is needed for session
-app.secret_key = 'dljsaklqk24e21cjn!Ew@@dsa5'
+app.secret_key = params['session_secret_key']
+
 @app.route("/",methods=['GET', 'POST'])
 def index_page():
     if request.method == "POST":
@@ -42,7 +43,7 @@ def index_page():
         session["result"] = result
         return render_template("session.html",result=result)
 
-    return render_template("index.html")
+    return render_template("index.html",params=params)
 
 @app.route("/session",methods=['GET', 'POST'])
 def session_Page():
@@ -54,6 +55,29 @@ def session_Page():
         return redirect(url_for('session_Page',answer_user=answer))
 
     return render_template("session.html")
+
+@app.route("/login",methods=['GET','POST'])
+def admin_login():
+    if ('user' in session and session['user']== params['admin_username']):
+        return render_template("admin.html")
+
+    if request.method == "POST":
+        username = request.form['usernmae']
+        passward = request.form['passward']
+        if (username== params['admin_username'] and passward==params['admin_password']):
+            session['user'] = username
+            return render_template("admin.html")
+        else:
+            return render_template("login.html",params=params)
+    return render_template("login.html",params=params)
+
+@app.route("/admin",methods=['GET','POST'])
+def admin_dashboard():
+    return render_template("admin.html")
+@app.route("/logout",methods=['GET','POST'])
+def logout():
+    session.pop('user')
+    return redirect(url_for('index_page',params=params))
 
 if __name__=="__main__":
     app.run(debug=True)

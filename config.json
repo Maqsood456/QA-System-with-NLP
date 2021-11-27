@@ -1,6 +1,10 @@
 {
   "params":
   {
-    "upload_folder_path": "C:\\Users\\MUHAMMAD\\PycharmProjects\\myproject\\static"
+    "upload_folder_path": "C:\\Users\\MUHAMMAD\\PycharmProjects\\myproject\\static",
+    "session_secret_key": "dljsaklqk24e21cjn!Ew@@dsa5",
+    "admin_username": "admin",
+    "admin_password": "admin",
+    "footer_caption": "@2021 Qureshi software solutions"
   }
 }
