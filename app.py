@@ -37,7 +37,7 @@ def index_page():
             audio = r.record(source)
             result = r.recognize_google(audio)
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO Lectures(username,topic,videoname,videotext,date) VALUES(%s,%s,%s,%s,%s)",(username,topic,video.filename,result,datetime.now()))
+        cur.execute("INSERT INTO Lectures(username,lecture_topic,lecture_file,lecture_text,date_posted) VALUES(%s,%s,%s,%s,%s)",(username,topic,video.filename,result,datetime.now()))
         mysql.connection.commit()
         cur.close()
         session["result"] = result
@@ -53,9 +53,16 @@ def session_Page():
         from answer_extractor import get_answer
         Answer = get_answer(question,answer_text)
         answer_user= Answer['answer']
+        class_list = dict()
+        class_list[question] = answer_user
+        import pickle
+        file= open('pickle.pickle','wb')
+        pickle.dump(class_list,file)
+        file.close
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO Lectures(username,topic,videoname,videotext,date) VALUES(%s,%s,%s,%s,%s)",
-                    (username, topic, video.filename, result, datetime.now()))
+        cur.execute(
+            "INSERT INTO Lectures(qa_file) VALUES(%s)",
+            (pickle.pickle))
         mysql.connection.commit()
         cur.close()
         return render_template("session.html",answer_user=answer_user,result=answer_text)
