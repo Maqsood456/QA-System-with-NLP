@@ -28,7 +28,7 @@ def index_page():
         topic = request.form['topic']
         video= request.files['inputfile']
         video.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(video.filename)))
-        videoClip = VideoFileClip(os.path.join(app.config['UPLOAD_FOLDER'],video.filename))
+        videoClip = VideoFileClip(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(video.filename)))
         audiopath = os.path.splitext(video.filename)[0]
         audioclip = videoClip.audio.write_audiofile(os.path.join(app.config['UPLOAD_FOLDER'],audiopath+'.wav'))
         r = sr.Recognizer()
@@ -50,9 +50,15 @@ def session_Page():
     if request.method == "POST":
         question = request.form['question']
         answer_text = session.get("result",None)
-        from answer_extractor import find_answer
-        answer = find_answer(question,answer_text)
-        return redirect(url_for('session_Page',answer_user=answer))
+        from answer_extractor import get_answer
+        Answer = get_answer(question,answer_text)
+        answer_user= Answer['answer']
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO Lectures(username,topic,videoname,videotext,date) VALUES(%s,%s,%s,%s,%s)",
+                    (username, topic, video.filename, result, datetime.now()))
+        mysql.connection.commit()
+        cur.close()
+        return render_template("session.html",answer_user=answer_user,result=answer_text)
 
     return render_template("session.html")
 
