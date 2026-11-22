@@ -1,0 +1,3 @@
+# Count only the Python code in GitHub's language bar
+templates/* linguist-vendored
+static/** linguist-vendored
